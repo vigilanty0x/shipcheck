@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "repository": "synthetic/example",
+  "expected_sha": "1111111111111111111111111111111111111111",
+  "observed_sha": "1111111111111111111111111111111111111111",
+  "merge_sha": "2222222222222222222222222222222222222222",
+  "captured_at": "2026-01-01T00:00:00Z",
+  "ci": {"build": "success", "test": "success", "style": "success"},
+  "required_ci": ["build", "test"],
+  "optional_ci": ["style"],
+  "tests_complete": true,
+  "tests_passed": true,
+  "secret_scan_complete": true,
+  "secret_findings": [],
+  "clean_tree": true,
+  "inventory": {
+    "changes": [
+      {"path": "tests/test_example.py", "additions": 12, "deletions": 0, "binary": false},
+      {"path": "src/example.py", "additions": 8, "deletions": 2, "binary": false}
+    ]
+  }
+}
+

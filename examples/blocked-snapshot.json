@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0",
+  "repository": "synthetic/example",
+  "expected_sha": "1111111111111111111111111111111111111111",
+  "observed_sha": "3333333333333333333333333333333333333333",
+  "merge_sha": "2222222222222222222222222222222222222222",
+  "captured_at": "2026-01-01T00:00:00Z",
+  "ci": {"build": "success", "test": "pending"},
+  "required_ci": ["build", "test"],
+  "optional_ci": [],
+  "tests_complete": false,
+  "tests_passed": false,
+  "secret_scan_complete": true,
+  "secret_findings": [],
+  "clean_tree": true,
+  "inventory": {"changes": [{"path": "src/example.py", "additions": 8, "deletions": 2, "binary": false}]}
+}
+

@@ -1,0 +1,10 @@
+{
+  "policy_version": "1.0",
+  "max_changed_files": 100,
+  "max_changed_lines": 5000,
+  "max_binary_files": 5,
+  "require_clean_tree": true,
+  "require_tests": true,
+  "require_secret_scan": true
+}
+

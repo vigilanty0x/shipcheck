@@ -27,5 +27,4 @@ jobs:
       - run: python -m deploy_truth verify-evidence /tmp/truth.json
       - run: python -m deploy_truth probe functional
       - run: python -m deploy_truth demo /tmp/deploy-truth-demo
-      - run: python -m pip wheel . --no-deps --no-build-isolation --wheel-dir /tmp/wheel
-
+      - run: python -m pip wheel . --no-deps --wheel-dir /tmp/wheel

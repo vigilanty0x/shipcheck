@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0",
+  "spec": {
+    "schema_version": "1.0",
+    "release_version": "example-1.0",
+    "components": [
+      {
+        "name": "web",
+        "version": "1.0.0",
+        "dependencies": [],
+        "state": "ready",
+        "artifacts": ["web/app.bin", "web/config.json"]
+      }
+    ]
+  },
+  "layers": {
+    "source": {
+      "web/app.bin": "cmVsZWFzZS12MQo=",
+      "web/config.json": "eyJtb2RlIjoiZXhhbXBsZSJ9Cg=="
+    },
+    "bundle": {
+      "web/app.bin": "cmVsZWFzZS12MQo=",
+      "web/config.json": "eyJtb2RlIjoiZXhhbXBsZSJ9Cg=="
+    },
+    "live": {
+      "web/app.bin": "cmVsZWFzZS12MQo=",
+      "web/config.json": "eyJtb2RlIjoiZXhhbXBsZSJ9Cg=="
+    }
+  }
+}
+

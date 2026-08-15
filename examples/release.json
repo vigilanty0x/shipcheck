@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0",
+  "release_version": "example-1.0",
+  "components": [
+    {
+      "name": "web",
+      "version": "1.0.0",
+      "dependencies": [],
+      "state": "ready",
+      "artifacts": ["web/app.bin", "web/config.json"]
+    }
+  ]
+}
+

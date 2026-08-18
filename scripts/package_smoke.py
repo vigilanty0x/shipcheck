@@ -25,16 +25,20 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="shipcheck-wheel-") as tmp:
         env_dir = Path(tmp) / "venv"
         venv.EnvBuilder(with_pip=True, clear=True).create(env_dir)
-        if sys.platform == "win32":
-            python = env_dir / "Scripts" / "python.exe"
-        else:
-            python = env_dir / "bin" / "python"
+        python = env_dir / ("Scripts/python.exe" if sys.platform == "win32" else "bin/python")
 
         run([str(python), "-m", "pip", "install", "--disable-pip-version-check", "--no-index", "--no-deps", str(wheel)])
         run([str(python), "-m", "pip", "check"])
+        run([str(python), "-m", "shipcheck", "selftest"])
         run([str(python), "-m", "shipcheck", "probe", "functional"])
         run([str(python), "-m", "safe_merge_gate", "probe", "functional"])
-        run([str(python), "-c", "import shipcheck, safe_merge_gate; assert shipcheck.evaluate is safe_merge_gate.evaluate"])
+        run([
+            str(python), "-c",
+            "import shipcheck, safe_merge_gate; "
+            "from shipcheck import merge_gate, release_gate; "
+            "assert shipcheck.DecisionEngine is release_gate.DecisionEngine; "
+            "assert merge_gate.evaluate is safe_merge_gate.evaluate",
+        ])
 
     print("installed-wheel-smoke: ok")
     return 0

@@ -1,9 +1,46 @@
-"""Canonical Shipcheck compatibility API.
+"""Canonical Shipcheck public API.
 
-The initial consolidation step intentionally re-exports the proven
-``safe_merge_gate`` core. The richer release-gate engine is absorbed in a
-separate migration step so identity changes cannot silently change behavior.
+The release-readiness engine owns the canonical ``shipcheck`` import surface.
+The deterministic merge gate remains available at ``safe_merge_gate`` and
+``shipcheck.merge_gate`` during the compatibility window.
 """
 
-from safe_merge_gate import *  # noqa: F401,F403
-from safe_merge_gate import __all__, __version__
+from . import merge_gate, release_gate
+from .release_gate import (
+    Decision,
+    DecisionEngine,
+    DecisionLedger,
+    GateResult,
+    ReleaseEvidence,
+    ReleasePolicy,
+    Waiver,
+    explain_receipt,
+    export_receipt,
+    evaluate_release,
+    normalize_bundle,
+    normalize_cyclonedx,
+    normalize_junit,
+    normalize_sarif,
+    verify_receipt,
+)
+
+__all__ = [
+    "Decision",
+    "DecisionEngine",
+    "DecisionLedger",
+    "GateResult",
+    "ReleaseEvidence",
+    "ReleasePolicy",
+    "Waiver",
+    "explain_receipt",
+    "export_receipt",
+    "evaluate_release",
+    "merge_gate",
+    "normalize_bundle",
+    "normalize_cyclonedx",
+    "normalize_junit",
+    "normalize_sarif",
+    "release_gate",
+    "verify_receipt",
+]
+__version__ = release_gate.__version__

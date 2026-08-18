@@ -3,15 +3,15 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "safe-merge-gate"
+name = "shipcheck"
 version = "0.1.0"
-description = "Offline fail-closed merge decisions with transactional local apply and exact rollback."
+description = "Offline evidence-first merge and release readiness checks with fail-closed decisions and exact rollback."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [{name = "vigilanty0x"}]
-keywords = ["merge", "gate", "ci", "transaction", "evidence"]
+keywords = ["release", "merge", "gate", "ci", "rollback", "evidence"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",
@@ -21,7 +21,13 @@ classifiers = [
 ]
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/vigilanty0x/shipcheck"
+Repository = "https://github.com/vigilanty0x/shipcheck"
+Issues = "https://github.com/vigilanty0x/shipcheck/issues"
+
 [project.scripts]
+shipcheck = "shipcheck.cli:main"
 safe-merge-gate = "safe_merge_gate.cli:main"
 
 [tool.setuptools]
@@ -32,4 +38,3 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 safe_merge_gate = ["py.typed"]
-

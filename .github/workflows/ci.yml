@@ -24,13 +24,15 @@ jobs:
         run: PYTHONPATH=src python scripts/check.py
       - name: Tests
         run: PYTHONPATH=src python -m unittest discover -s tests -v
-      - name: Functional counter-proof
+      - name: Canonical functional counter-proof
+        run: PYTHONPATH=src python -m shipcheck probe functional
+      - name: Legacy alias parity
         run: PYTHONPATH=src python -m safe_merge_gate probe functional
       - name: Ready and blocked fixtures
         run: |
-          PYTHONPATH=src python -m safe_merge_gate evaluate --snapshot examples/ready-snapshot.json --policy examples/policy.json --generated-at 2026-01-01T00:00:00Z
+          PYTHONPATH=src python -m shipcheck evaluate --snapshot examples/ready-snapshot.json --policy examples/policy.json --generated-at 2026-01-01T00:00:00Z
           set +e
-          PYTHONPATH=src python -m safe_merge_gate evaluate --snapshot examples/blocked-snapshot.json --generated-at 2026-01-01T00:00:00Z
+          PYTHONPATH=src python -m shipcheck evaluate --snapshot examples/blocked-snapshot.json --generated-at 2026-01-01T00:00:00Z
           code=$?
           set -e
           test "$code" -eq 2

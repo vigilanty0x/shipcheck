@@ -1,14 +1,21 @@
-# Safe Merge Gate
+# Shipcheck
 
-Safe Merge Gate is a zero-runtime-dependency Python CLI and library that decides
-whether an immutable merge snapshot is safe to apply. It runs entirely offline on
-bounded JSON snapshots and synthetic fixtures; it does not call a forge, mutate a
-remote branch, or require an account.
+Shipcheck is the canonical package and CLI for this repository. It provides an
+offline, zero-runtime-dependency readiness gate over bounded JSON snapshots and
+synthetic fixtures. It does not call a forge, mutate a remote branch, or require
+an account.
 
-`ready` is the only applicable decision. Required failures produce `blocked`.
-Optional failures produce `degraded`, which is still not applicable.
+This consolidation branch is intentionally transitional. The original
+`safe-merge-gate` implementation remains available as a compatibility namespace
+and CLI alias while consumers move to `shipcheck`. The separate
+`shipcheck-release-gate` repository is an absorption candidate for the
+`release_gate` module; its richer release engine is **not** claimed as merged by
+this identity-only step.
 
-The gate verifies:
+`ready` is the only applicable merge decision. Required failures produce
+`blocked`. Optional failures produce `degraded`, which is still not applicable.
+
+The current core verifies:
 
 - expected SHA equals observed SHA;
 - every required CI check succeeded;
@@ -18,29 +25,42 @@ The gate verifies:
 - changed file, changed line, and binary-file limits;
 - a canonical, sorted and uniquely addressed change inventory.
 
-## Offline walkthrough
+## Canonical CLI
 
 ```bash
-PYTHONPATH=src python -m safe_merge_gate inventory --snapshot examples/ready-snapshot.json
-PYTHONPATH=src python -m safe_merge_gate evaluate \
+PYTHONPATH=src python -m shipcheck inventory --snapshot examples/ready-snapshot.json
+PYTHONPATH=src python -m shipcheck evaluate \
   --snapshot examples/ready-snapshot.json \
   --policy examples/policy.json \
-  --evidence /tmp/safe-merge-evidence.json \
+  --evidence /tmp/shipcheck-evidence.json \
   --generated-at 2026-01-01T00:00:00Z
-cp examples/local-state.json /tmp/safe-merge-state.json
-PYTHONPATH=src python -m safe_merge_gate dry-run \
-  --evidence /tmp/safe-merge-evidence.json --state /tmp/safe-merge-state.json
-PYTHONPATH=src python -m safe_merge_gate apply \
-  --evidence /tmp/safe-merge-evidence.json --state /tmp/safe-merge-state.json \
-  --receipt /tmp/safe-merge-receipt.json --created-at 2026-01-01T00:00:00Z
-PYTHONPATH=src python -m safe_merge_gate verify \
-  --receipt /tmp/safe-merge-receipt.json --state /tmp/safe-merge-state.json
-PYTHONPATH=src python -m safe_merge_gate rollback \
-  --receipt /tmp/safe-merge-receipt.json --state /tmp/safe-merge-state.json
+cp examples/local-state.json /tmp/shipcheck-state.json
+PYTHONPATH=src python -m shipcheck dry-run \
+  --evidence /tmp/shipcheck-evidence.json --state /tmp/shipcheck-state.json
+PYTHONPATH=src python -m shipcheck apply \
+  --evidence /tmp/shipcheck-evidence.json --state /tmp/shipcheck-state.json \
+  --receipt /tmp/shipcheck-receipt.json --created-at 2026-01-01T00:00:00Z
+PYTHONPATH=src python -m shipcheck verify \
+  --receipt /tmp/shipcheck-receipt.json --state /tmp/shipcheck-state.json
+PYTHONPATH=src python -m shipcheck rollback \
+  --receipt /tmp/shipcheck-receipt.json --state /tmp/shipcheck-state.json
 ```
 
 Blocked/degraded evaluation and inapplicable dry-runs return exit code `2`.
 Malformed input, a transaction conflict, or failed verification returns `1`.
+
+## Legacy compatibility
+
+During the transition window these remain supported and are expected to produce
+the same behavior:
+
+```bash
+PYTHONPATH=src python -m safe_merge_gate probe functional
+safe-merge-gate probe functional
+```
+
+New integrations should use `shipcheck` or `python -m shipcheck`. See
+`docs/IDENTITY_MIGRATION.md` for the compatibility and rollback contract.
 
 ## Transaction guarantees
 
@@ -58,9 +78,15 @@ See `docs/CONTRACT.md`, `docs/TRANSACTIONS.md`, `docs/FAILURE_MODEL.md`, and
 ```bash
 PYTHONPATH=src python -m unittest discover -s tests -v
 PYTHONPATH=src python scripts/check.py
+PYTHONPATH=src python -m shipcheck probe functional
 PYTHONPATH=src python -m safe_merge_gate probe functional
 PIP_NO_INDEX=1 python -m pip wheel . --no-deps --no-build-isolation -w dist
 ```
 
-Licensed under Apache-2.0.
+## Status
 
+This draft is **PREPARED**, not merged, tagged, released, redirected, or archived.
+Source repositories remain unchanged until compatibility, consumer inventory,
+rollback, release, and human approval gates are complete.
+
+Licensed under Apache-2.0.

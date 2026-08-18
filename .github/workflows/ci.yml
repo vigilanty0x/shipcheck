@@ -73,7 +73,7 @@ jobs:
           SOURCE_SHA: 8d5813d3ec492abefccc704ba16467f894d71863
         run: |
           set -euo pipefail
-          source_dir="$RUNNER_TEMP/shipcheck-release-gate-source"
+          source_dir=".source-history-test"
           rm -rf "$source_dir"
           mkdir -p "$source_dir"
           git archive "$SOURCE_SHA" | tar -x -C "$source_dir"

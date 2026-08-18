@@ -1,0 +1,39 @@
+name: Stage exact release-gate history
+
+on:
+  push:
+    branches:
+      - rehearsal/portfolio-consolidation
+    paths:
+      - .github/workflows/stage-release-gate-history.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: shipcheck-release-gate-history-stage
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Checkout target history
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+      - name: Fetch and publish exact source commit as migration ref
+        shell: bash
+        env:
+          SOURCE_URL: https://github.com/vigilanty0x/shipcheck-release-gate.git
+          SOURCE_SHA: 8d5813d3ec492abefccc704ba16467f894d71863
+          STAGING_REF: refs/heads/migration/shipcheck-release-gate-history
+        run: |
+          set -euo pipefail
+          git remote remove release-gate 2>/dev/null || true
+          git remote add release-gate "$SOURCE_URL"
+          git fetch --no-tags release-gate "$SOURCE_SHA"
+          test "$(git rev-parse FETCH_HEAD)" = "$SOURCE_SHA"
+          git cat-file -e "$SOURCE_SHA^{commit}"
+          git push origin "$SOURCE_SHA:$STAGING_REF"

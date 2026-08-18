@@ -1,0 +1,51 @@
+{
+  "schema_version": "shipcheck/migration-status-v1",
+  "target": "vigilanty0x/shipcheck",
+  "source": "vigilanty0x/shipcheck-release-gate",
+  "source_commit": "8d5813d3ec492abefccc704ba16467f894d71863",
+  "source_repository_tree": "3dcce371575565d698d10fbd549ae3e774ff379c",
+  "source_package_tree": "f6c15f54f350b5283075f3ee3df26ee7e49ed70c",
+  "target_rehearsal_base": "dd147ab8f38d5c843e1e5f38cb4818ff500e99cb",
+  "identity_commit": "3f807276ba510ce830ca7e1bfeda0ae8ca61ec91",
+  "installability_commit": "72359630921b9982411a43876e07addfd250d133",
+  "identity": {
+    "canonical": "shipcheck",
+    "legacy_alias": "safe-merge-gate",
+    "status": "VERIFIED_BY_CI",
+    "workflow_run": 32152145929
+  },
+  "installability": {
+    "status": "VERIFIED_BY_CI",
+    "workflow_run": 32152702525,
+    "python": ["3.11", "3.12"],
+    "checks": [
+      "unit_and_negative_tests",
+      "canonical_counterproof",
+      "legacy_alias_parity",
+      "wheel_build",
+      "fresh_venv_install",
+      "pip_check",
+      "installed_canonical_smoke",
+      "installed_legacy_smoke"
+    ]
+  },
+  "release_gate_absorption": {
+    "decision": "IMPORT_AS_SHIPCHECK_RELEASE_GATE_MODULE",
+    "code_import": "NOT_DONE",
+    "exact_source_history_reachable_from_target": false,
+    "history_gate": "BLOCKED",
+    "history_blocker": "The available GitHub Git-data API rejected both a foreign tree object and a foreign commit parent with HTTP 422. No replacement ancestry was fabricated.",
+    "consumer_inventory": "PARTIAL",
+    "redirect": "NOT_RUN",
+    "archive": "NOT_RUN",
+    "release": "NOT_RUN",
+    "human_approval": "REQUIRED"
+  },
+  "rollback": {
+    "contract": "docs/IDENTITY_MIGRATION.md",
+    "rehearsal": "DOCUMENTED_NOT_EXECUTED",
+    "remote_mutation": false
+  },
+  "status": "PREPARED",
+  "not_claimed": ["MERGED", "TAGGED", "RELEASED", "POST_RELEASE_VERIFIED", "REDIRECTED", "ARCHIVED"]
+}

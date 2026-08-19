@@ -36,9 +36,25 @@
     "target_package_tree": "f6c15f54f350b5283075f3ee3df26ee7e49ed70c",
     "source_target_tree_equal": true,
     "source_bytes_preserved": true,
-    "exact_source_history_reachable_from_target": false,
-    "history_gate": "BLOCKED",
-    "history_blocker": "The source package tree is preserved byte-for-byte under src/shipcheck/release_gate, but the available GitHub Git-data API rejected both a foreign tree object and a foreign commit parent with HTTP 422. Exact source ancestry is therefore not claimed or fabricated.",
+    "exact_source_history_reachable_from_target": true,
+    "history_gate": "VERIFIED_BY_ANCESTRY_TREE_AND_SOURCE_TEST_CI",
+    "history_evidence": {
+      "source_commit_resolves_in_target": true,
+      "merge_base_is_source_commit": true,
+      "workflow_run": 32154064500,
+      "matrix": [
+        "ubuntu-24.04/python-3.11",
+        "ubuntu-24.04/python-3.13",
+        "windows-2025/python-3.11",
+        "windows-2025/python-3.13"
+      ],
+      "checks": [
+        "git_merge_base_is_ancestor",
+        "source_repository_tree_matches",
+        "source_package_tree_matches",
+        "exact_source_test_gate"
+      ]
+    },
     "consumer_inventory": "PARTIAL",
     "redirect": "NOT_RUN",
     "archive": "NOT_RUN",

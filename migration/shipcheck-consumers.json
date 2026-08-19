@@ -1,7 +1,7 @@
 {
   "schema_version": "shipcheck/consumer-inventory-v1",
   "target": "vigilanty0x/shipcheck",
-  "target_head": "72359630921b9982411a43876e07addfd250d133",
+  "observed_target_head": "42dea35ac1f62d2b64c76c610f5ffe8260626d62",
   "canonical_identity": {
     "distribution": "shipcheck",
     "import": "shipcheck",
@@ -39,42 +39,60 @@
   ],
   "observations": [
     {
-      "method": "connected_code_search",
+      "method": "connected_default_branch_code_search",
       "query": "safe_merge_gate",
       "scope": "15 shipcheck-family repositories",
       "hits": 0
     },
     {
-      "method": "connected_code_search",
+      "method": "connected_default_branch_code_search",
       "query": "safe-merge-gate",
       "scope": "15 shipcheck-family repositories",
       "hits": 0
     },
     {
-      "method": "connected_code_search",
+      "method": "connected_default_branch_code_search",
       "query": "shipcheck-release-gate",
       "scope": "15 shipcheck-family repositories",
       "hits": 0
+    },
+    {
+      "method": "connected_default_branch_code_search",
+      "query": "shipcheck.release_gate",
+      "scope": "15 shipcheck-family repositories",
+      "hits": 0
+    },
+    {
+      "method": "repository_metadata",
+      "repository": "vigilanty0x/shipcheck-release-gate",
+      "public_forks": 0,
+      "network_count": 0
+    },
+    {
+      "method": "repository_metadata",
+      "repository": "vigilanty0x/safe-merge-gate",
+      "public_forks": 0,
+      "network_count": 0
     }
   ],
   "coverage": {
-    "code_search": "partial",
-    "all_default_branch_manifests": "not_run",
-    "all_workflows": "not_run",
-    "all_documentation_references": "not_run",
-    "package_registry_consumers": "not_run",
-    "forks": "not_run",
-    "external_pilots": "not_run",
+    "family_default_branch_indexed_content": "searched_for_all_legacy_identifiers",
+    "public_source_forks": "verified_zero_at_observation_time",
+    "sha_bound_source_history": "verified",
+    "package_registry_consumers": "not_proven",
+    "external_installations": "not_observable",
+    "explicit_private_or_unpublished_pilots": "human_attestation_required",
     "complete": false
   },
-  "interpretation": "Zero indexed hits is not evidence of zero consumers. Archive and redirect gates remain blocked until every required consumer class is scanned against explicit repository SHAs.",
+  "interpretation": "No legacy-identity references were returned from connected default-branch search across the 15 public family repositories, and both public source repositories currently report zero forks/network count. This materially reduces observed public migration risk but does not prove zero external package consumers, private clones, unpublished installations or human-known pilots.",
   "archive_gate": "BLOCKED",
   "redirect_gate": "BLOCKED",
+  "alias_removal_gate": "BLOCKED",
   "next_required_evidence": [
-    "SHA-bound manifest and import scan for every family repository",
-    "SHA-bound workflow and documentation scan",
-    "package-registry consumer check when a package has been published",
-    "fork and pilot inventory",
-    "consumer migration receipts or explicit keep decisions"
+    "human attestation for private/unpublished pilots or adopters",
+    "package-registry consumer/publication check if a package has ever been published",
+    "migration receipt for every externally known consumer",
+    "real rollback rehearsal bound to the final migration head",
+    "explicit human approval before redirect, alias removal or archive"
   ]
 }

@@ -8,7 +8,7 @@
     {
       "repository": "vigilanty0x/shipcheck",
       "role": "CANONICAL_TARGET",
-      "surface": ["shipcheck", "safe_merge_gate", "shipcheck CLI", "safe-merge-gate CLI"],
+      "surface": ["shipcheck", "safe_merge_gate", "shipcheck CLI", "shipcheck-release-gate CLI", "safe-merge-gate CLI"],
       "state": "ACTIVE"
     },
     {
@@ -16,7 +16,9 @@
       "role": "SOURCE_MODULE",
       "targetModule": "shipcheck.release_gate",
       "observedComponents": ["adapters", "api", "artifacts", "ledger", "receipt", "risk", "trust", "public_schemas", "dashboard"],
-      "state": "PORT_REQUIRED",
+      "state": "PORTED_PENDING_VERIFICATION",
+      "compatibility": ["historical shipcheck module aliases", "direct release-gate command family", "shipcheck-release-gate CLI"],
+      "targetTest": "tests/test_release_gate_namespace.py",
       "archiveGate": "BLOCKED"
     },
     {

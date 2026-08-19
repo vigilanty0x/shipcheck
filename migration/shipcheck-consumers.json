@@ -1,0 +1,80 @@
+{
+  "schema_version": "shipcheck/consumer-inventory-v1",
+  "target": "vigilanty0x/shipcheck",
+  "target_head": "72359630921b9982411a43876e07addfd250d133",
+  "canonical_identity": {
+    "distribution": "shipcheck",
+    "import": "shipcheck",
+    "module_cli": "python -m shipcheck",
+    "installed_cli": "shipcheck"
+  },
+  "legacy_identity": {
+    "import": "safe_merge_gate",
+    "module_cli": "python -m safe_merge_gate",
+    "installed_cli": "safe-merge-gate",
+    "support": "transition_alias"
+  },
+  "release_gate_source": {
+    "repository": "vigilanty0x/shipcheck-release-gate",
+    "commit": "8d5813d3ec492abefccc704ba16467f894d71863",
+    "repository_tree": "3dcce371575565d698d10fbd549ae3e774ff379c",
+    "package_tree": "f6c15f54f350b5283075f3ee3df26ee7e49ed70c"
+  },
+  "family_repositories": [
+    "ci-failure-summarizer",
+    "ci-matrix-generator",
+    "deploy-truth",
+    "diff-risk-scorer",
+    "flaky-test-tracker",
+    "local-ci-runner",
+    "pr-review-council",
+    "release-readiness",
+    "reproducible-demo-harness",
+    "rollback-drill",
+    "safe-merge-gate",
+    "shipcheck",
+    "shipcheck-release-gate",
+    "test-evidence-pack",
+    "test-gap-finder"
+  ],
+  "observations": [
+    {
+      "method": "connected_code_search",
+      "query": "safe_merge_gate",
+      "scope": "15 shipcheck-family repositories",
+      "hits": 0
+    },
+    {
+      "method": "connected_code_search",
+      "query": "safe-merge-gate",
+      "scope": "15 shipcheck-family repositories",
+      "hits": 0
+    },
+    {
+      "method": "connected_code_search",
+      "query": "shipcheck-release-gate",
+      "scope": "15 shipcheck-family repositories",
+      "hits": 0
+    }
+  ],
+  "coverage": {
+    "code_search": "partial",
+    "all_default_branch_manifests": "not_run",
+    "all_workflows": "not_run",
+    "all_documentation_references": "not_run",
+    "package_registry_consumers": "not_run",
+    "forks": "not_run",
+    "external_pilots": "not_run",
+    "complete": false
+  },
+  "interpretation": "Zero indexed hits is not evidence of zero consumers. Archive and redirect gates remain blocked until every required consumer class is scanned against explicit repository SHAs.",
+  "archive_gate": "BLOCKED",
+  "redirect_gate": "BLOCKED",
+  "next_required_evidence": [
+    "SHA-bound manifest and import scan for every family repository",
+    "SHA-bound workflow and documentation scan",
+    "package-registry consumer check when a package has been published",
+    "fork and pilot inventory",
+    "consumer migration receipts or explicit keep decisions"
+  ]
+}

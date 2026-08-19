@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 1,
+  "target": "shipcheck",
+  "base": "safe-merge-gate",
+  "baseHeadSha": "0b9f8054322a8fde647dd67f2070e9ce3c0ae52c",
+  "sources": [
+    {
+      "repository": "pr-review-council",
+      "prefix": "packages/pr-review-council",
+      "headSha": "3d9d3609cdbfedf767188cdd703f819f9fd77c3b",
+      "treeSha": "bac049f752dd61644ddf7d72dfc5cd4206b5a16b",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "deploy-truth",
+      "prefix": "packages/deploy-truth",
+      "headSha": "dedc297263b9bdc62ed0d24177401513531c03bf",
+      "treeSha": "803d2f28910c48e5de0b2741ae99954f46820495",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "flaky-test-tracker",
+      "prefix": "packages/flaky-test-tracker",
+      "headSha": "696a33a1bf1fe36be4a63abd169ab2574baba6ad",
+      "treeSha": "814b6ab33951a96d880835916be24003c606b097",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "test-evidence-pack",
+      "prefix": "packages/test-evidence-pack",
+      "headSha": "e8125b372c7b7c8ce7968eb127e7dde33e2fa7cd",
+      "treeSha": "95fd0ec0f8839d261612c2d33d7483c32d5ff194",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "test-gap-finder",
+      "prefix": "packages/test-gap-finder",
+      "headSha": "6452a57bab479edf88ac931deece0fdd456e7fcd",
+      "treeSha": "867c299461ac676eda3956eb0d0fd787d7e2e283",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "local-ci-runner",
+      "prefix": "packages/local-ci-runner",
+      "headSha": "aaf04c7d1342e56eb424e685a957c39a22363d2c",
+      "treeSha": "c822c983966a65ef1233d595f997b715b4b62218",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "ci-failure-summarizer",
+      "prefix": "packages/ci-failure-summarizer",
+      "headSha": "4a42a0c933b227eda3c89c7c94ea7b670c272a90",
+      "treeSha": "0aa0fe67c6b12cb6c4f437cc91321fd7859621e2",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "ci-matrix-generator",
+      "prefix": "packages/ci-matrix-generator",
+      "headSha": "f77a371dbc26fe6931476d68d83cd93a2e94d758",
+      "treeSha": "d8dbcab3f83e42f58c1db0d3b4d2497413cdada3",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "release-readiness",
+      "prefix": "packages/release-readiness",
+      "headSha": "c4285c70ca942909ce966ee93ca5805d629f2dae",
+      "treeSha": "fa33142a04c7530694809e0b7db26beeaced025b",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "rollback-drill",
+      "prefix": "packages/rollback-drill",
+      "headSha": "582f3e851ace799b0ebfc5b7907852bf54802f68",
+      "treeSha": "ba2216a4a9034044d887dee56c29ac8ff0ee291f",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "diff-risk-scorer",
+      "prefix": "packages/diff-risk-scorer",
+      "headSha": "8631500bc5cecb9524cd617532362b5ee0ea9851",
+      "treeSha": "c60cf590c1c777973a1c1825850496e4efe18e04",
+      "ancestor": true,
+      "treeMatch": true
+    },
+    {
+      "repository": "reproducible-demo-harness",
+      "prefix": "packages/reproducible-demo-harness",
+      "headSha": "8f6c44e3a3a9fb1d084b090a1990b8b105f59267",
+      "treeSha": "0f392fbb9b286946dfacea420fbbeeac6b2b543b",
+      "ancestor": true,
+      "treeMatch": true
+    }
+  ],
+  "state": "REHEARSAL_ONLY",
+  "archiveGate": "BLOCKED",
+  "reason": "Tests, compatibility, release, redirect, consumer, rollback, and human gates are not all verified."
+}

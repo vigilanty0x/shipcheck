@@ -33,19 +33,28 @@ Audited source repository: `vigilanty0x/shipcheck-release-gate`.
 Observed source commit:
 `8d5813d3ec492abefccc704ba16467f894d71863`.
 
-The source package tree at `src/shipcheck` is
-`f6c15f54f350b5283075f3ee3df26ee7e49ed70c`. The target subtree at
-`src/shipcheck/release_gate` has the exact same Git tree SHA. This proves the
-reviewed package tree was imported byte-for-byte into the Shipcheck branch.
+The source repository tree is
+`3dcce371575565d698d10fbd549ae3e774ff379c`, and the source package tree at
+`src/shipcheck` is `f6c15f54f350b5283075f3ee3df26ee7e49ed70c`.
+The target subtree at `src/shipcheck/release_gate` has the exact same package tree
+SHA, proving byte-for-byte preservation of the reviewed package tree.
 
-This does **not** prove source ancestry is reachable from the target repository.
-The available Git-data API rejected both reuse of the foreign tree object and a
-foreign commit parent with HTTP 422, so the ancestry/history gate remains
-`BLOCKED`. No replacement ancestry is fabricated and no source repository may be
-archived on the strength of the subtree copy alone.
+Source history is also reachable from the target branch. The source commit
+resolves inside `vigilanty0x/shipcheck`, and comparison against the current
+consolidation lineage uses that exact source commit as the merge base. CI run
+`32154064500` independently passed the source-history gate on Ubuntu 24.04 and
+Windows 2025 with Python 3.11 and 3.13. That gate executes
+`git merge-base --is-ancestor`, verifies the exact repository and package trees,
+then archives and tests the exact source commit.
 
-The migration status file records both facts separately: exact code-tree
-preservation is proven; exact source-history reachability is not.
+An earlier Git-data import attempt returned HTTP 422. That historical failed
+attempt is retained as counter-evidence, but it is no longer the current state:
+subsequent consolidation made the exact source history reachable without
+fabricating ancestry.
+
+Therefore the code-tree and history gates are verified separately. This still
+does **not** authorize redirect, release or source archival; consumer, rollback,
+release and human gates remain independent.
 
 ## Consumer migration
 
@@ -68,8 +77,8 @@ release-gate steps:
 3. disable/remove only the new `shipcheck` compatibility entrypoints if required;
 4. stop routing callers to `shipcheck.release_gate` and retain the source
    repository as the supported release-gate implementation;
-5. run the legacy functional counter-proof, release-gate source tests and full
-   target unit suite;
+5. run the legacy functional counter-proof, exact release-gate source tests and
+   full target unit suite;
 6. verify the source commit, source package tree and target rollback SHA recorded
    by the rollback receipt.
 
@@ -79,6 +88,6 @@ this document or by the compatibility wrappers.
 ## Status vocabulary
 
 This migration may be described as `PREPARED` only after CI passes at the exact
-head SHA. Exact subtree preservation does not imply `MERGED`, `TAGGED`,
-`RELEASED`, post-release `VERIFIED`, `REDIRECTED` or `ARCHIVED`; those remain
-distinct gates.
+head SHA. Verified source history and exact subtree preservation do not imply
+`MERGED`, `TAGGED`, `RELEASED`, post-release `VERIFIED`, `REDIRECTED` or
+`ARCHIVED`; those remain distinct gates.

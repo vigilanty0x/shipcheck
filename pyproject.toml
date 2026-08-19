@@ -23,6 +23,7 @@ dependencies = []
 
 [project.scripts]
 shipcheck = "shipcheck.cli:main"
+shipcheck-release-gate = "shipcheck.release_gate.cli:main"
 safe-merge-gate = "safe_merge_gate.cli:main"
 
 [tool.setuptools]

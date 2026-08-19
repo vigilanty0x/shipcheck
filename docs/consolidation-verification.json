@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "status": "TECHNICALLY_VERIFIED_HUMAN_GATE_PENDING",
+  "verifiedAt": "2026-08-19T06:36:00Z",
+  "verificationRun": {
+    "repository": "vigilanty0x/shipcheck",
+    "pullRequest": 2,
+    "workflowRunId": 32224147715,
+    "workflowRunNumber": 3,
+    "workflowConclusion": "success",
+    "verificationHeadSha": "42f64b30369278ce05cab67eaaf18d11c3f5dddd"
+  },
+  "shipcheck": {
+    "baseSha": "340d5a1df9851b5093e0824d219174ffafaf30e0",
+    "testedPython": ["3.11", "3.12"],
+    "checks": [
+      "source tests",
+      "legacy fail-closed functional counter-proof",
+      "safe_merge_gate compatibility",
+      "shipcheck release_gate namespace compatibility",
+      "wheel build",
+      "isolated wheel install",
+      "shipcheck-release-gate CLI smoke"
+    ],
+    "result": "PASS"
+  },
+  "agentops": {
+    "testedSha": "ba2417bb2a29e57617dc92012f653bb4c79974be",
+    "testedPython": ["3.11", "3.12"],
+    "checks": [
+      "source tests",
+      "agentops compatibility imports",
+      "automation_control_plane compatibility imports",
+      "agentmesh compatibility imports and source contract",
+      "wheel build",
+      "isolated wheel install",
+      "agentmesh CLI smoke"
+    ],
+    "result": "PASS"
+  },
+  "supplyChain": {
+    "checkoutSha": "11d5960a326750d5838078e36cf38b85af677262",
+    "setupPythonSha": "a26af69be951a213d495a4c3e4e4022e16d87065",
+    "workflowPermissions": {"contents": "read"}
+  },
+  "notAuthorized": [
+    "merge",
+    "release",
+    "archive",
+    "delete source repository",
+    "close superseded pull requests"
+  ],
+  "remainingGates": [
+    "human approval",
+    "consumer inventory must remain complete/current before any archive",
+    "release/tag verification before any release claim"
+  ]
+}

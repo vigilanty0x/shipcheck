@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "canonicalRepository": "vigilanty0x/shipcheck",
+  "canonicalProduct": "shipcheck",
+  "status": "MIGRATION_IN_PROGRESS",
+  "archiveAuthorized": false,
+  "sources": [
+    {
+      "repository": "vigilanty0x/shipcheck",
+      "role": "CANONICAL_TARGET",
+      "surface": ["shipcheck", "safe_merge_gate", "shipcheck CLI", "safe-merge-gate CLI"],
+      "state": "ACTIVE"
+    },
+    {
+      "repository": "vigilanty0x/shipcheck-release-gate",
+      "role": "SOURCE_MODULE",
+      "targetModule": "shipcheck.release_gate",
+      "observedComponents": ["adapters", "api", "artifacts", "ledger", "receipt", "risk", "trust", "public_schemas", "dashboard"],
+      "state": "PORT_REQUIRED",
+      "archiveGate": "BLOCKED"
+    },
+    {
+      "repository": "vigilanty0x/safe-merge-gate",
+      "role": "SOURCE_IDENTITY",
+      "targetModule": "safe_merge_gate compatibility surface in shipcheck",
+      "state": "LEGACY_SUPPORT_REQUIRED",
+      "archiveGate": "BLOCKED"
+    },
+    {
+      "repository": "vigilanty0x/ci-failure-summarizer",
+      "role": "SOURCE_MODULE",
+      "targetModule": "shipcheck diagnostics",
+      "state": "MAPPING_FROM_AUDIT",
+      "archiveGate": "BLOCKED"
+    },
+    {
+      "repository": "vigilanty0x/ci-matrix-generator",
+      "role": "SOURCE_MODULE",
+      "targetModule": "shipcheck compatibility matrix",
+      "state": "MAPPING_FROM_AUDIT",
+      "archiveGate": "BLOCKED"
+    },
+    {
+      "repository": "vigilanty0x/release-readiness",
+      "role": "SOURCE_MODULE",
+      "targetModule": "shipcheck release readiness",
+      "state": "MAPPING_FROM_AUDIT",
+      "archiveGate": "BLOCKED"
+    }
+  ],
+  "consumerSearch": {
+    "queries": ["safe_merge_gate", "shipcheck-release-gate"],
+    "githubConnectedCodeSearchResults": 0,
+    "interpretation": "NO_INDEXED_CONSUMER_OBSERVED_NOT_PROOF_OF_ABSENCE",
+    "requiredBeforeArchive": "exhaustive consumer inventory with repository/path/ref"
+  },
+  "gates": [
+    "source tests pass on target",
+    "target tests pass",
+    "old imports and CLI pass",
+    "new imports and CLI pass",
+    "schema mappings explicit",
+    "wheel and sdist install outside checkout",
+    "negative fail-closed fixture preserved",
+    "rollback rehearsed",
+    "human approval"
+  ]
+}

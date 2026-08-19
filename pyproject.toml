@@ -27,10 +27,15 @@ safe-merge-gate = "safe_merge_gate.cli:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}
+include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["src"]
 
 [tool.setuptools.package-data]
 safe_merge_gate = ["py.typed"]
-
+"shipcheck.release_gate" = [
+  "compatibility.json",
+  "dashboard/*",
+  "public_schemas/*.json",
+]

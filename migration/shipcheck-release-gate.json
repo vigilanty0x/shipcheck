@@ -72,6 +72,6 @@
     "rehearsal": "DOCUMENTED_NOT_EXECUTED",
     "remote_mutation": false
   },
-  "status": "PREPARED_PENDING_CURRENT_HEAD_CI",
+  "status": "PREPARED_WHEN_CURRENT_HEAD_CI_IS_GREEN",
   "not_claimed": ["MERGED", "TAGGED", "RELEASED", "POST_RELEASE_VERIFIED", "REDIRECTED", "ARCHIVED"]
 }

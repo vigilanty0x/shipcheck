@@ -4,11 +4,23 @@ from __future__ import annotations
 
 import ast
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 TEXT_SUFFIXES = {".py", ".md", ".toml", ".json", ".yml", ".yaml"}
 FORBIDDEN = ("sk" + "yom", "private" + "_token", "api" + "_key=", "authorization:" + " bearer")
+# Public CC wire identifier only; this does not exempt its line or other text.
+PUBLIC_WIRE_SCHEMA = "skyom.business.run.v1"
+_WIRE_LITERAL = re.compile(r"(['\"`])" + re.escape(PUBLIC_WIRE_SCHEMA) + r"\1")
+_PERSONAL_PATH = re.compile(r"(?:[a-z]:[\\/]+Users[\\/]+|/(?:home|Users)/)", re.IGNORECASE)
+
+
+def boundary_violations(text: str) -> list[str]:
+    checked = _WIRE_LITERAL.sub('', text)
+    problems = ['forbidden boundary marker' for marker in FORBIDDEN if marker in checked.lower()]
+    if _PERSONAL_PATH.search(checked): problems.append('personal home path')
+    return problems
 
 
 def main() -> int:
@@ -21,8 +33,8 @@ def main() -> int:
             continue
         inspected += 1
         text = path.read_text(encoding="utf-8")
-        for marker in FORBIDDEN:
-            if marker in text.lower(): failures.append(f"{path.relative_to(ROOT)} contains forbidden boundary marker")
+        for problem in boundary_violations(text):
+            failures.append(f"{path.relative_to(ROOT)} contains {problem}")
         if path.suffix == ".py":
             try: ast.parse(text, filename=str(path))
             except SyntaxError as exc: failures.append(f"{path.relative_to(ROOT)}: {exc}")

@@ -1,5 +1,31 @@
 # Shipcheck
 
+## Integrated evidence-to-rollback workflow (working-tree candidate)
+
+```bash
+shipcheck workflow request.json --root ./inputs --output ./new-run --trust-store ./reviewed-local-trust.json
+```
+
+This entry chains the two existing gate engines. It hashes the real artifact
+files, binds the merge and release candidates and change inventories, computes
+risk, normalizes real JUnit files and cross-checks their results, evaluates the
+release and merge policies, then performs apply → verify → exact rollback on a
+**new private copy** of the supplied state. It retains every stage and receipt.
+The supplied state and artifacts are rechecked and never changed by the workflow.
+
+It verifies supplied test reports; it does not execute repository commands or
+claim the reports were produced during this run. It does not merge Git, deploy,
+publish or modify a live application. LAB readiness remains `ready_lab` with
+`production_ready=false`, even when its local rollback drill passes. A blocked
+gate cannot reach the drill. Existing output directories are refused.
+
+See [the workflow request and result contract](docs/INTEGRATED-WORKFLOW.md).
+An optional [producer receipt bundle](docs/PRODUCER-RECEIPTS.md) cross-checks CC
+receipts and their complete declared public artifact inventory. It can veto a
+run; supplied hashes and candidate bindings never become authenticated evidence.
+All historical commands below remain supported. This working-tree addition is
+not a release or authorization to archive source repositories.
+
 Shipcheck is a zero-runtime-dependency Python CLI and library for offline,
 fail-closed release and merge readiness checks over immutable snapshots. It keeps
 the original Safe Merge Gate engine and transaction model while making `shipcheck`

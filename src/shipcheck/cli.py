@@ -37,6 +37,9 @@ _MERGE_COMMANDS = frozenset({"inventory", "evaluate", "dry-run", "apply", "verif
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
+    if args and args[0] == "workflow":
+        from .workflow import main as workflow_main
+        return workflow_main(args[1:])
     if args and args[0] == "release-gate":
         return _release_main(args[1:])
     if args and args[0] == "merge-gate":

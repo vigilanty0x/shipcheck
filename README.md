@@ -94,10 +94,13 @@ Historical release-engine module imports such as `shipcheck.engine` and
 `shipcheck.models` resolve to the corresponding `shipcheck.release_gate`
 modules.
 
-## Multi-tool source suites
+## One concrete project, 15 tools
 
-The repository also preserves the full Git histories and source trees of these
-related tools under `packages/`:
+Shipcheck is the single repository for 15 merge, CI, test-evidence, deployment,
+and release-readiness identities. The three compatible root identities are
+Shipcheck, Safe Merge Gate, and Shipcheck Release Gate. The repository also
+preserves the full Git histories and source trees of these related tools under
+`packages/`:
 
 - `pr-review-council`
 - `deploy-truth`
@@ -115,6 +118,10 @@ related tools under `packages/`:
 `.portfolio-rehearsal.json` records each source commit, destination prefix, and
 tree SHA. CI verifies both ancestry and exact subtree preservation, then runs
 every imported suite's repository checks and unit tests.
+
+`MONOREPO.json` is the complete machine-checkable map for all 15 identities and
+keeps deletion of the source repositories explicitly unauthorized while the
+consolidation is prepared and reviewed.
 
 ## Release-gate provenance
 

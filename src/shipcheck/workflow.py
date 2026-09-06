@@ -7,7 +7,7 @@ The original state and artifacts are rechecked before the final receipt.
 from __future__ import annotations
 
 import argparse
-import datetime as dt
+
 import hashlib
 import json
 import os

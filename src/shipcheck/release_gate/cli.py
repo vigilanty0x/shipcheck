@@ -7,7 +7,7 @@ import json
 import sys
 import os
 from pathlib import Path
-from typing import Any
+
 
 from . import __version__
 from .api import create_server

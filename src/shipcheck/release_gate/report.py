@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import html
-import json
+
 from typing import Any
 
 from .canonical import canonical_json

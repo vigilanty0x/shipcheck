@@ -15,9 +15,26 @@ namespace. The canonical root API itself stays bound to the merge-gate types.
 from importlib import import_module as _import_module
 import sys as _sys
 
-from safe_merge_gate import *  # noqa: F401,F403
-from safe_merge_gate import __all__ as _legacy_all
-from safe_merge_gate import __version__
+from safe_merge_gate import (
+    ApplyBlocked as ApplyBlocked,
+    Change as Change,
+    Check as Check,
+    CheckState as CheckState,
+    ContractError as ContractError,
+    Decision as Decision,
+    GateArtifact as GateArtifact,
+    GatePolicy as GatePolicy,
+    LocalMergeTransaction as LocalMergeTransaction,
+    MergeSnapshot as MergeSnapshot,
+    Receipt as Receipt,
+    SecretFinding as SecretFinding,
+    TransactionConflict as TransactionConflict,
+    TransactionVerificationError as TransactionVerificationError,
+    evaluate as evaluate,
+)
+from safe_merge_gate import __version__ as _legacy_version
+
+__version__ = _legacy_version
 
 from . import release_gate
 
@@ -48,4 +65,4 @@ for _name in _RELEASE_MODULE_ALIASES:
 
 del _name, _import_module, _sys
 
-__all__ = [*_legacy_all, "release_gate"]
+__all__ = ['ApplyBlocked', 'Change', 'Check', 'CheckState', 'ContractError', 'Decision', 'GateArtifact', 'GatePolicy', 'LocalMergeTransaction', 'MergeSnapshot', 'Receipt', 'SecretFinding', 'TransactionConflict', 'TransactionVerificationError', 'evaluate', 'release_gate']

@@ -1,5 +1,5 @@
 """One real local workflow; signed synthetic inputs, actual files and rollback."""
-import copy
+
 import datetime as dt
 import hashlib
 import json

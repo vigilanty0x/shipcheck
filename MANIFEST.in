@@ -1,8 +1,9 @@
 include requirements-test.lock
 
-# Explicit public source selection; preserves parity fixtures and historical packages.
+# Explicit public source selection; preserves parity fixtures and migration evidence.
 include .github/workflows/ci.yml
 include .gitignore
+include .portfolio-rehearsal.json
 include AI_ASSISTANCE.md
 include CHANGELOG.md
 include CONTRIBUTING.md
@@ -13,6 +14,7 @@ include docs/ARCHITECTURE.md
 include docs/CONTRACT.md
 include docs/FAILURE_MODEL.md
 include docs/INTEGRATED-WORKFLOW.md
+include docs/IDENTITY_MIGRATION.md
 include docs/PRODUCER-RECEIPTS.md
 include docs/RELEASE_GATE_MIGRATION.md
 include docs/SAFETY.md
@@ -23,7 +25,11 @@ include examples/local-state.json
 include examples/policy.json
 include examples/ready-snapshot.json
 include pyproject.toml
+include migration/shipcheck-consumers.json
+include migration/shipcheck-release-gate.json
 include scripts/check.py
+include scripts/package_smoke.py
+include scripts/verify_consolidation_history.py
 include src/safe_merge_gate/__init__.py
 include src/safe_merge_gate/__main__.py
 include src/safe_merge_gate/cli.py
@@ -35,6 +41,8 @@ include src/safe_merge_gate/transaction.py
 include src/shipcheck/__init__.py
 include src/shipcheck/__main__.py
 include src/shipcheck/cli.py
+include src/shipcheck/merge_gate/__init__.py
+include src/shipcheck/merge_gate/__main__.py
 include src/shipcheck/producer_receipts.py
 include src/shipcheck/release_gate/__init__.py
 include src/shipcheck/release_gate/__main__.py
@@ -73,6 +81,7 @@ include tests/test_cli_probes.py
 include tests/test_compatibility_aliases.py
 include tests/test_contract.py
 include tests/test_gate.py
+include tests/test_identity_compat.py
 include tests/test_producer_receipts.py
 include tests/test_public_boundary_protocol.py
 include tests/test_release_gate_namespace.py

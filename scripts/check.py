@@ -14,6 +14,9 @@ FORBIDDEN = ("sk" + "yom", "private" + "_token", "api" + "_key=", "authorization
 PUBLIC_WIRE_SCHEMA = "skyom.business.run.v1"
 _WIRE_LITERAL = re.compile(r"(['\"`])" + re.escape(PUBLIC_WIRE_SCHEMA) + r"\1")
 _PERSONAL_PATH = re.compile(r"(?:[a-z]:[\\/]+Users[\\/]+|/(?:home|Users)/)", re.IGNORECASE)
+_NESTED_PERSONAL_PATH_SCANNERS = {
+    Path("packages/reproducible-demo-harness/scripts/check.py"),
+}
 
 
 def boundary_violations(text: str) -> list[str]:
@@ -27,13 +30,19 @@ def main() -> int:
     failures: list[str] = []
     inspected = 0
     for path in sorted(ROOT.rglob("*")):
-        if not path.is_file() or any(part in {"dist", "build", "__pycache__"} for part in path.parts):
+        if not path.is_file() or any(part in {".git", "dist", "build", "__pycache__"} for part in path.parts):
             continue
         if path.suffix not in TEXT_SUFFIXES and path.name not in {"LICENSE", ".gitignore"}:
             continue
         inspected += 1
         text = path.read_text(encoding="utf-8")
+        relative = path.relative_to(ROOT)
         for problem in boundary_violations(text):
+            # This exact imported checker contains the literal it rejects. Its
+            # source tree must remain byte-for-byte preserved, and its own check
+            # still runs independently in the imported-suite CI job.
+            if problem == "personal home path" and relative in _NESTED_PERSONAL_PATH_SCANNERS:
+                continue
             failures.append(f"{path.relative_to(ROOT)} contains {problem}")
         if path.suffix == ".py":
             try: ast.parse(text, filename=str(path))

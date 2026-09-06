@@ -1,0 +1,14 @@
+{
+  "pr_id": "counter-proof",
+  "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "title": "Synthetic gate failure",
+  "body": "This fixture must be blocked.",
+  "files": [
+    {
+      "path": "src/unsafe.py",
+      "patch": "@@ -0,0 +1 @@\n+password = 'synthetic-password'\n",
+      "additions": 1,
+      "deletions": 0
+    }
+  ]
+}

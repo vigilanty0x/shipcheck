@@ -16,7 +16,10 @@
       "role": "SOURCE_MODULE",
       "targetModule": "shipcheck.release_gate",
       "observedComponents": ["adapters", "api", "artifacts", "ledger", "receipt", "risk", "trust", "public_schemas", "dashboard"],
-      "state": "PORTED_PENDING_VERIFICATION",
+      "state": "ABSORBED_WITH_COMPATIBILITY",
+      "sourceCommit": "8d5813d3ec492abefccc704ba16467f894d71863",
+      "exactImportCommit": "0332482531783984a27878deddc8a19c32e3804b",
+      "verification": "source ancestry, immutable import tree, exact source tests, target namespace tests",
       "compatibility": ["historical shipcheck module aliases", "direct release-gate command family", "shipcheck-release-gate CLI"],
       "targetTest": "tests/test_release_gate_namespace.py",
       "archiveGate": "BLOCKED"

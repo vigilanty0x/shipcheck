@@ -1,0 +1,12 @@
+{
+  "files": [
+    {
+      "path": "src/example.py",
+      "additions": 20,
+      "deletions": 3,
+      "sensitive": false,
+      "binary": false
+    }
+  ]
+}
+

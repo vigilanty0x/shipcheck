@@ -1,112 +1,161 @@
 # Shipcheck
 
-## Integrated evidence-to-rollback workflow (working-tree candidate)
+Shipcheck is the canonical offline, fail-closed project for merge and release
+readiness. Missing, stale, contradictory, or unauthenticated evidence never
+becomes a green decision. No command performs a remote merge, deploy, release,
+redirect, or archive.
+
+The project keeps two bounded engines behind one product identity:
+
+- **merge readiness** — the original deterministic gate, exposed canonically at
+  the `shipcheck` package root and retained as `safe_merge_gate`,
+  `shipcheck.merge_gate`, and `safe-merge-gate` for compatibility;
+- **release readiness** — the absorbed evidence-first engine under
+  `shipcheck.release_gate`, with its historical module aliases and
+  `shipcheck-release-gate` CLI retained during migration.
+
+## Integrated evidence-to-rollback workflow
 
 ```bash
 shipcheck workflow request.json --root ./inputs --output ./new-run --trust-store ./reviewed-local-trust.json
 ```
 
-This entry chains the two existing gate engines. It hashes the real artifact
-files, binds the merge and release candidates and change inventories, computes
-risk, normalizes real JUnit files and cross-checks their results, evaluates the
-release and merge policies, then performs apply → verify → exact rollback on a
-**new private copy** of the supplied state. It retains every stage and receipt.
-The supplied state and artifacts are rechecked and never changed by the workflow.
+This entry chains both engines. It hashes real artifact files, binds the merge
+and release candidates and change inventories, computes risk, normalizes and
+cross-checks supplied JUnit results, evaluates both policies, then performs
+apply → verify → exact rollback on a **new private copy** of the supplied state.
+The supplied state and artifacts are rechecked and never changed.
 
-It verifies supplied test reports; it does not execute repository commands or
-claim the reports were produced during this run. It does not merge Git, deploy,
-publish or modify a live application. LAB readiness remains `ready_lab` with
-`production_ready=false`, even when its local rollback drill passes. A blocked
-gate cannot reach the drill. Existing output directories are refused.
+It verifies supplied reports; it does not execute repository commands or claim
+the reports were produced during this run. LAB readiness remains `ready_lab`
+with `production_ready=false`, even when the local rollback drill passes. A
+blocked gate cannot reach the drill, and existing output directories are
+refused.
 
-See [the workflow request and result contract](docs/INTEGRATED-WORKFLOW.md).
-An optional [producer receipt bundle](docs/PRODUCER-RECEIPTS.md) cross-checks CC
-receipts and their complete declared public artifact inventory. It can veto a
-run; supplied hashes and candidate bindings never become authenticated evidence.
-All historical commands below remain supported. This working-tree addition is
-not a release or authorization to archive source repositories.
+See [the workflow contract](docs/INTEGRATED-WORKFLOW.md). An optional
+[producer receipt bundle](docs/PRODUCER-RECEIPTS.md) cross-checks CC receipts and
+their complete declared public artifact inventory. It can veto a run; supplied
+hashes and candidate bindings never become authenticated evidence.
 
-Shipcheck is a zero-runtime-dependency Python CLI and library for offline,
-fail-closed release and merge readiness checks over immutable snapshots. It keeps
-the original Safe Merge Gate engine and transaction model while making `shipcheck`
-the canonical product identity.
+## Compatibility and commands
 
-## Compatibility
-
-New consumers should use:
+New consumers should use `shipcheck`:
 
 ```bash
+python -m pip install .
 python -m shipcheck --help
-shipcheck --help
+shipcheck probe functional
+shipcheck selftest
 ```
 
-Existing consumers remain supported during the migration window:
+Existing merge-gate consumers remain supported:
 
 ```bash
-python -m safe_merge_gate --help
-safe-merge-gate --help
+python -m safe_merge_gate probe functional
+safe-merge-gate probe functional
+shipcheck merge-gate probe functional
 ```
 
-The legacy `safe_merge_gate` Python package remains importable and is the current
-implementation behind the canonical `shipcheck` compatibility layer. No existing
-CLI command is removed by this migration.
+Release-readiness commands include `capabilities`, `selftest`, `demo`,
+`validate`, `decide`, `artifact`, `normalize`, `ledger`, `promotion`, `receipt`,
+and `serve`. They can be invoked directly through `shipcheck`, through the
+explicit `shipcheck release-gate ...` prefix, or through the retained
+`shipcheck-release-gate` CLI.
 
-`ready` is the only applicable decision. Required failures produce `blocked`.
-Optional failures produce `degraded`, which is still not applicable.
-
-The gate verifies:
-
-- expected SHA equals observed SHA;
-- every required CI check succeeded;
-- tests completed and passed;
-- secret scanning completed with no fingerprinted finding;
-- the local tree is clean;
-- changed file, changed line, and binary-file limits;
-- a canonical, sorted and uniquely addressed change inventory.
-
-## Offline walkthrough
+Merge commands include `inventory`, `evaluate`, `dry-run`, `apply`, `verify`,
+`rollback`, and `probe`. Existing unprefixed commands retain their behavior:
 
 ```bash
-PYTHONPATH=src python -m shipcheck inventory --snapshot examples/ready-snapshot.json
-PYTHONPATH=src python -m shipcheck evaluate \
+shipcheck evaluate \
   --snapshot examples/ready-snapshot.json \
   --policy examples/policy.json \
-  --evidence /tmp/shipcheck-evidence.json \
+  --evidence /tmp/shipcheck-merge-evidence.json \
   --generated-at 2026-01-01T00:00:00Z
-cp examples/local-state.json /tmp/shipcheck-state.json
-PYTHONPATH=src python -m shipcheck dry-run \
-  --evidence /tmp/shipcheck-evidence.json --state /tmp/shipcheck-state.json
-PYTHONPATH=src python -m shipcheck apply \
-  --evidence /tmp/shipcheck-evidence.json --state /tmp/shipcheck-state.json \
-  --receipt /tmp/shipcheck-receipt.json --created-at 2026-01-01T00:00:00Z
-PYTHONPATH=src python -m shipcheck verify \
-  --receipt /tmp/shipcheck-receipt.json --state /tmp/shipcheck-state.json
-PYTHONPATH=src python -m shipcheck rollback \
-  --receipt /tmp/shipcheck-receipt.json --state /tmp/shipcheck-state.json
 ```
 
-Blocked/degraded evaluation and inapplicable dry-runs return exit code `2`.
-Malformed input, a transaction conflict, or failed verification returns `1`.
+## Python API
 
-## Transaction guarantees
+The canonical root preserves the merge-gate API, while the release engine owns
+its explicit namespace:
 
-Dry-run performs no write. Apply verifies the artifact digest and local base SHA,
-writes a durable receipt before atomically replacing the local state, then verifies
-the exact resulting bytes. Rollback restores the precise prior bytes (including
-formatting) or removes a state that did not previously exist. Rollback refuses to
-overwrite state changed by another actor after apply.
+```python
+import safe_merge_gate
+import shipcheck
+from shipcheck import merge_gate, release_gate
 
-See `docs/CONTRACT.md`, `docs/TRANSACTIONS.md`, `docs/FAILURE_MODEL.md`, and
-`docs/SAFETY.md` for the public contract and limitations.
+assert shipcheck.evaluate is safe_merge_gate.evaluate
+assert merge_gate.evaluate is safe_merge_gate.evaluate
+assert shipcheck.Decision is safe_merge_gate.Decision
+assert shipcheck.Decision is not release_gate.Decision
+assert callable(release_gate.DecisionEngine)
+```
 
-## Development
+Historical release-engine module imports such as `shipcheck.engine` and
+`shipcheck.models` resolve to the corresponding `shipcheck.release_gate`
+modules.
+
+## Multi-tool source suites
+
+The repository also preserves the full Git histories and source trees of these
+related tools under `packages/`:
+
+- `pr-review-council`
+- `deploy-truth`
+- `flaky-test-tracker`
+- `test-evidence-pack`
+- `test-gap-finder`
+- `local-ci-runner`
+- `ci-failure-summarizer`
+- `ci-matrix-generator`
+- `release-readiness`
+- `rollback-drill`
+- `diff-risk-scorer`
+- `reproducible-demo-harness`
+
+`.portfolio-rehearsal.json` records each source commit, destination prefix, and
+tree SHA. CI verifies both ancestry and exact subtree preservation, then runs
+every imported suite's repository checks and unit tests.
+
+## Release-gate provenance
+
+The release engine was imported from audited commit
+`8d5813d3ec492abefccc704ba16467f894d71863` of
+`vigilanty0x/shipcheck-release-gate`. Import commit
+`0332482531783984a27878deddc8a19c32e3804b` has that source commit as a parent
+and preserves its exact package tree
+`f6c15f54f350b5283075f3ee3df26ee7e49ed70c` at
+`src/shipcheck/release_gate`.
+
+The current subtree contains later, reviewed integration maintenance from
+`main`; CI therefore verifies the immutable import snapshot separately from the
+maintained current tree. The source history remains reachable without rewriting
+its SHA, and the source's own test gate runs from an archive of the exact source
+commit.
+
+The migration remains reversible: `safe_merge_gate` and the compatibility CLIs
+remain available, and no source repository is changed by this pull request.
+
+## Development and counter-proofs
 
 ```bash
-PYTHONPATH=src python -m unittest discover -s tests -v
 PYTHONPATH=src python scripts/check.py
+PYTHONPATH=src python -m unittest discover -s tests -v
+PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 PYTHONPATH=src python -m pytest -q tests
+PYTHONPATH=src python -m shipcheck selftest
 PYTHONPATH=src python -m shipcheck probe functional
 PYTHONPATH=src python -m safe_merge_gate probe functional
-PIP_NO_INDEX=1 python -m pip wheel . --no-deps --no-build-isolation -w dist
+python scripts/verify_consolidation_history.py
+python -m pip wheel . --no-deps --no-build-isolation -w dist
 ```
+
+## Status
+
+This branch is a consolidation candidate. Green checks establish only that the
+exact head is prepared for review; they do not imply `MERGED`, `TAGGED`,
+`RELEASED`, post-release `VERIFIED`, `REDIRECTED`, or `ARCHIVED`.
+
+Consumer inventory, a final-head rollback receipt, release provenance,
+redirect/deprecation windows, archive gates, and explicit human approval remain
+separate gates.
 
 Licensed under Apache-2.0.

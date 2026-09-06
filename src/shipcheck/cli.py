@@ -17,7 +17,7 @@ import sys
 from safe_merge_gate.cli import main as _merge_main
 from .release_gate.cli import main as _release_main
 
-_RELEASE_COMMANDS = frozenset(
+RELEASE_COMMANDS = frozenset(
     {
         "capabilities",
         "selftest",
@@ -32,21 +32,24 @@ _RELEASE_COMMANDS = frozenset(
         "serve",
     }
 )
-_MERGE_COMMANDS = frozenset({"inventory", "evaluate", "dry-run", "apply", "verify", "rollback", "probe"})
+MERGE_COMMANDS = frozenset(
+    {"inventory", "evaluate", "dry-run", "apply", "verify", "rollback", "probe"}
+)
 
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     if args and args[0] == "workflow":
         from .workflow import main as workflow_main
+
         return workflow_main(args[1:])
     if args and args[0] == "release-gate":
         return _release_main(args[1:])
     if args and args[0] == "merge-gate":
         return _merge_main(args[1:])
-    if args and args[0] in _RELEASE_COMMANDS:
+    if args and args[0] in RELEASE_COMMANDS:
         return _release_main(args)
     return _merge_main(args)
 
 
-__all__ = ["main"]
+__all__ = ["main", "MERGE_COMMANDS", "RELEASE_COMMANDS"]

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=83.0.0,<84"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -11,7 +11,7 @@ requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 authors = [{name = "vigilanty0x"}]
-keywords = ["release", "merge", "gate", "ci", "transaction", "evidence"]
+keywords = ["release", "merge", "gate", "ci", "transaction", "rollback", "evidence"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Programming Language :: Python :: 3",
@@ -20,6 +20,11 @@ classifiers = [
   "Typing :: Typed",
 ]
 dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/vigilanty0x/shipcheck"
+Repository = "https://github.com/vigilanty0x/shipcheck"
+Issues = "https://github.com/vigilanty0x/shipcheck/issues"
 
 [project.scripts]
 shipcheck = "shipcheck.cli:main"
@@ -35,6 +40,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 safe_merge_gate = ["py.typed"]
+shipcheck = ["py.typed"]
 "shipcheck.release_gate" = [
   "compatibility.json",
   "dashboard/*",

@@ -1,0 +1,77 @@
+{
+  "schema_version": "shipcheck/migration-status-v1",
+  "target": "vigilanty0x/shipcheck",
+  "source": "vigilanty0x/shipcheck-release-gate",
+  "source_commit": "8d5813d3ec492abefccc704ba16467f894d71863",
+  "source_repository_tree": "3dcce371575565d698d10fbd549ae3e774ff379c",
+  "source_package_tree": "f6c15f54f350b5283075f3ee3df26ee7e49ed70c",
+  "target_rehearsal_base": "dd147ab8f38d5c843e1e5f38cb4818ff500e99cb",
+  "identity_commit": "3f807276ba510ce830ca7e1bfeda0ae8ca61ec91",
+  "installability_commit": "72359630921b9982411a43876e07addfd250d133",
+  "identity": {
+    "canonical": "shipcheck",
+    "legacy_alias": "safe-merge-gate",
+    "status": "VERIFIED_BY_CI",
+    "workflow_run": 32152145929
+  },
+  "installability": {
+    "status": "VERIFIED_BY_CI",
+    "workflow_run": 32152702525,
+    "python": ["3.11", "3.12"],
+    "checks": [
+      "unit_and_negative_tests",
+      "canonical_counterproof",
+      "legacy_alias_parity",
+      "wheel_build",
+      "fresh_venv_install",
+      "pip_check",
+      "installed_canonical_smoke",
+      "installed_legacy_smoke"
+    ]
+  },
+  "release_gate_absorption": {
+    "decision": "IMPORT_AS_SHIPCHECK_RELEASE_GATE_MODULE",
+    "code_import": "EXACT_IMPORT_SNAPSHOT_WITH_POST_IMPORT_MAINTENANCE",
+    "import_commit": "0332482531783984a27878deddc8a19c32e3804b",
+    "target_path": "src/shipcheck/release_gate",
+    "import_target_package_tree": "f6c15f54f350b5283075f3ee3df26ee7e49ed70c",
+    "current_target_package_tree": "dff61164c53f46ad0614dd1845431df745705310",
+    "import_snapshot_source_target_tree_equal": true,
+    "current_target_tree_equal_to_source": false,
+    "source_bytes_preserved_at_import_snapshot": true,
+    "post_import_maintenance": [
+      "remove four unused imports while preserving release-gate behavior"
+    ],
+    "exact_source_history_reachable_from_target": true,
+    "history_gate": "VERIFIED_BY_ANCESTRY_TREE_AND_SOURCE_TEST_CI",
+    "history_evidence": {
+      "source_commit_resolves_in_target": true,
+      "merge_base_is_source_commit": true,
+      "workflow_run": 32154064500,
+      "matrix": [
+        "ubuntu-24.04/python-3.11",
+        "ubuntu-24.04/python-3.13",
+        "windows-2025/python-3.11",
+        "windows-2025/python-3.13"
+      ],
+      "checks": [
+        "git_merge_base_is_ancestor",
+        "source_repository_tree_matches",
+        "source_package_tree_matches",
+        "exact_source_test_gate"
+      ]
+    },
+    "consumer_inventory": "PARTIAL",
+    "redirect": "NOT_RUN",
+    "archive": "NOT_RUN",
+    "release": "NOT_RUN",
+    "human_approval": "REQUIRED"
+  },
+  "rollback": {
+    "contract": "docs/IDENTITY_MIGRATION.md",
+    "rehearsal": "DOCUMENTED_NOT_EXECUTED",
+    "remote_mutation": false
+  },
+  "status": "PREPARED_WHEN_CURRENT_HEAD_CI_IS_GREEN",
+  "not_claimed": ["MERGED", "TAGGED", "RELEASED", "POST_RELEASE_VERIFIED", "REDIRECTED", "ARCHIVED"]
+}

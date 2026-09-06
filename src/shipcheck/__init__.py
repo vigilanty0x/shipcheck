@@ -4,7 +4,7 @@ The legacy ``safe_merge_gate`` package remains supported for backwards
 compatibility. New consumers should import from ``shipcheck``.
 
 The absorbed evidence-first release engine is deliberately exposed as the
-``shipcheck.release_gate`` namespace so its ``Decision``/policy types do not
+``shipcheck.release_gate`` namespace so its ``Decision`` and policy types do not
 silently replace the legacy merge-gate types at the package root.
 
 Historical release-gate module imports such as ``shipcheck.engine`` and
@@ -65,4 +65,21 @@ for _name in _RELEASE_MODULE_ALIASES:
 
 del _name, _import_module, _sys
 
-__all__ = ['ApplyBlocked', 'Change', 'Check', 'CheckState', 'ContractError', 'Decision', 'GateArtifact', 'GatePolicy', 'LocalMergeTransaction', 'MergeSnapshot', 'Receipt', 'SecretFinding', 'TransactionConflict', 'TransactionVerificationError', 'evaluate', 'release_gate']
+__all__ = [
+    "ApplyBlocked",
+    "Change",
+    "Check",
+    "CheckState",
+    "ContractError",
+    "Decision",
+    "GateArtifact",
+    "GatePolicy",
+    "LocalMergeTransaction",
+    "MergeSnapshot",
+    "Receipt",
+    "SecretFinding",
+    "TransactionConflict",
+    "TransactionVerificationError",
+    "evaluate",
+    "release_gate",
+]

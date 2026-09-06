@@ -36,8 +36,12 @@ Observed source commit:
 The source repository tree is
 `3dcce371575565d698d10fbd549ae3e774ff379c`, and the source package tree at
 `src/shipcheck` is `f6c15f54f350b5283075f3ee3df26ee7e49ed70c`.
-The target subtree at `src/shipcheck/release_gate` has the exact same package tree
-SHA, proving byte-for-byte preservation of the reviewed package tree.
+Import commit `0332482531783984a27878deddc8a19c32e3804b` has the source commit
+as a parent and its target subtree at `src/shipcheck/release_gate` has the exact
+same package-tree SHA. This proves byte-for-byte preservation at the immutable
+import boundary. The maintained target subtree now contains four later
+`main`-line cleanup changes, so its current tree is intentionally verified
+separately instead of being mislabeled as byte-for-byte identical to the source.
 
 Source history is also reachable from the target branch. The source commit
 resolves inside `vigilanty0x/shipcheck`, and comparison against the current
@@ -52,9 +56,10 @@ attempt is retained as counter-evidence, but it is no longer the current state:
 subsequent consolidation made the exact source history reachable without
 fabricating ancestry.
 
-Therefore the code-tree and history gates are verified separately. This still
-does **not** authorize redirect, release or source archival; consumer, rollback,
-release and human gates remain independent.
+The current CI verifies all 12 imported suite histories and exact subtrees, the
+release-gate source ancestry and immutable import snapshot, and the source test
+gate separately. This still does **not** authorize redirect, release or source
+archival; consumer, rollback, release and human gates remain independent.
 
 ## Consumer migration
 

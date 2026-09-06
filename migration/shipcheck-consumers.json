@@ -1,7 +1,8 @@
 {
   "schema_version": "shipcheck/consumer-inventory-v1",
   "target": "vigilanty0x/shipcheck",
-  "observed_target_head": "42dea35ac1f62d2b64c76c610f5ffe8260626d62",
+  "consumer_observation_commit": "42dea35ac1f62d2b64c76c610f5ffe8260626d62",
+  "consumer_observation_scope": "historical evidence snapshot; refresh before redirect, alias removal, or archive",
   "canonical_identity": {
     "distribution": "shipcheck",
     "import": "shipcheck",

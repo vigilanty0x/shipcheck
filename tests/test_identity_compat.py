@@ -9,10 +9,12 @@ from shipcheck import cli as canonical_cli
 
 
 class IdentityCompatibilityTests(unittest.TestCase):
-    def test_canonical_api_is_release_gate_api(self) -> None:
-        self.assertIs(shipcheck.DecisionEngine, release_gate.DecisionEngine)
-        self.assertIs(shipcheck.DecisionLedger, release_gate.DecisionLedger)
-        self.assertEqual(shipcheck.__version__, release_gate.__version__)
+    def test_canonical_root_preserves_merge_gate_api(self) -> None:
+        self.assertIs(shipcheck.Decision, safe_merge_gate.Decision)
+        self.assertIs(shipcheck.evaluate, safe_merge_gate.evaluate)
+        self.assertIsNot(shipcheck.Decision, release_gate.Decision)
+        self.assertTrue(callable(release_gate.DecisionEngine))
+        self.assertEqual(shipcheck.__version__, safe_merge_gate.__version__)
 
     def test_merge_gate_legacy_import_remains_explicit_and_identical(self) -> None:
         self.assertIs(merge_gate.evaluate, safe_merge_gate.evaluate)
@@ -24,6 +26,9 @@ class IdentityCompatibilityTests(unittest.TestCase):
         self.assertIn("decide", canonical_cli.RELEASE_COMMANDS)
         self.assertNotIn("evaluate", canonical_cli.RELEASE_COMMANDS)
         self.assertNotIn("probe", canonical_cli.RELEASE_COMMANDS)
+        self.assertIn("evaluate", canonical_cli.MERGE_COMMANDS)
+        self.assertIn("probe", canonical_cli.MERGE_COMMANDS)
+        self.assertTrue(canonical_cli.RELEASE_COMMANDS.isdisjoint(canonical_cli.MERGE_COMMANDS))
 
 
 if __name__ == "__main__":

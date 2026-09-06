@@ -22,10 +22,17 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install hash-pinned test dependencies
+        run: >-
+          python -m pip install --disable-pip-version-check --only-binary=:all: --require-hashes -r requirements-test.lock
       - name: Public boundary and syntax
         run: PYTHONPATH=src python scripts/check.py
       - name: Target tests
         run: PYTHONPATH=src python -m unittest discover -s tests -v
+      - name: Complete behavior collection (unittest and pytest)
+        env:
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: PYTHONPATH=src python -m pytest -q tests
       - name: Absorbed release-gate selftest
         run: PYTHONPATH=src python -m shipcheck selftest
       - name: Canonical merge counter-proof
@@ -40,6 +47,38 @@ jobs:
           code=$?
           set -e
           test "$code" -eq 2
+
+  imported-suite:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        package:
+          - ci-failure-summarizer
+          - ci-matrix-generator
+          - deploy-truth
+          - diff-risk-scorer
+          - flaky-test-tracker
+          - local-ci-runner
+          - pr-review-council
+          - release-readiness
+          - reproducible-demo-harness
+          - rollback-drill
+          - test-evidence-pack
+          - test-gap-finder
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.11"
+      - name: Repository checks
+        working-directory: packages/${{ matrix.package }}
+        run: python scripts/check.py
+      - name: Unit tests
+        working-directory: packages/${{ matrix.package }}
+        run: PYTHONPATH=src python -m unittest discover -s tests -v
 
   source-history:
     runs-on: ${{ matrix.os }}
@@ -56,7 +95,9 @@ jobs:
       - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Verify exact source ancestry and trees
+      - name: Verify imported suite histories and trees
+        run: python scripts/verify_consolidation_history.py
+      - name: Verify exact release-gate source ancestry and trees
         shell: bash
         env:
           SOURCE_SHA: 8d5813d3ec492abefccc704ba16467f894d71863
@@ -67,7 +108,8 @@ jobs:
           git merge-base --is-ancestor "$SOURCE_SHA" HEAD
           test "$(git rev-parse "$SOURCE_SHA^{tree}")" = "$SOURCE_TREE"
           test "$(git rev-parse "$SOURCE_SHA:src/shipcheck")" = "$PACKAGE_TREE"
-      - name: Run exact source test gate
+          test "$(git rev-parse "0332482531783984a27878deddc8a19c32e3804b:src/shipcheck/release_gate")" = "$PACKAGE_TREE"
+      - name: Run exact release-gate source test gate
         shell: bash
         env:
           SOURCE_SHA: 8d5813d3ec492abefccc704ba16467f894d71863

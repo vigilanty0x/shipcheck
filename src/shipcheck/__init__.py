@@ -1,46 +1,85 @@
-"""Canonical Shipcheck public API.
+"""Canonical Shipcheck API.
 
-The release-readiness engine owns the canonical ``shipcheck`` import surface.
-The deterministic merge gate remains available at ``safe_merge_gate`` and
-``shipcheck.merge_gate`` during the compatibility window.
+The legacy ``safe_merge_gate`` package remains supported for backwards
+compatibility. New consumers should import from ``shipcheck``.
+
+The absorbed evidence-first release engine is deliberately exposed as the
+``shipcheck.release_gate`` namespace so its ``Decision`` and policy types do not
+silently replace the legacy merge-gate types at the package root.
+
+Historical release-gate module imports such as ``shipcheck.engine`` and
+``shipcheck.models`` are registered as compatibility aliases to the absorbed
+namespace. The canonical root API itself stays bound to the merge-gate types.
 """
 
-from . import merge_gate, release_gate
-from .release_gate import (
-    Decision,
-    DecisionEngine,
-    DecisionLedger,
-    GateResult,
-    ReleaseEvidence,
-    ReleasePolicy,
-    Waiver,
-    explain_receipt,
-    export_receipt,
-    evaluate_release,
-    normalize_bundle,
-    normalize_cyclonedx,
-    normalize_junit,
-    normalize_sarif,
-    verify_receipt,
+from importlib import import_module as _import_module
+import sys as _sys
+
+from safe_merge_gate import (
+    ApplyBlocked as ApplyBlocked,
+    Change as Change,
+    Check as Check,
+    CheckState as CheckState,
+    ContractError as ContractError,
+    Decision as Decision,
+    GateArtifact as GateArtifact,
+    GatePolicy as GatePolicy,
+    LocalMergeTransaction as LocalMergeTransaction,
+    MergeSnapshot as MergeSnapshot,
+    Receipt as Receipt,
+    SecretFinding as SecretFinding,
+    TransactionConflict as TransactionConflict,
+    TransactionVerificationError as TransactionVerificationError,
+    evaluate as evaluate,
 )
+from safe_merge_gate import __version__ as _legacy_version
+
+__version__ = _legacy_version
+
+from . import release_gate
+
+_RELEASE_MODULE_ALIASES = (
+    "adapters",
+    "api",
+    "artifacts",
+    "canonical",
+    "demo",
+    "engine",
+    "errors",
+    "ledger",
+    "limits",
+    "models",
+    "receipt",
+    "redaction",
+    "report",
+    "risk",
+    "secureio",
+    "selftest",
+    "trust",
+)
+for _name in _RELEASE_MODULE_ALIASES:
+    _sys.modules.setdefault(
+        f"{__name__}.{_name}",
+        _import_module(f"{__name__}.release_gate.{_name}"),
+    )
+
+del _name, _import_module, _sys
 
 __all__ = [
+    "ApplyBlocked",
+    "Change",
+    "Check",
+    "CheckState",
+    "ContractError",
     "Decision",
-    "DecisionEngine",
-    "DecisionLedger",
-    "GateResult",
-    "ReleaseEvidence",
-    "ReleasePolicy",
-    "Waiver",
-    "explain_receipt",
-    "export_receipt",
-    "evaluate_release",
-    "merge_gate",
-    "normalize_bundle",
-    "normalize_cyclonedx",
-    "normalize_junit",
-    "normalize_sarif",
+    "GateArtifact",
+    "GatePolicy",
+    "LocalMergeTransaction",
+    "MergeSnapshot",
+    "Receipt",
+    "SecretFinding",
+    "TransactionConflict",
+    "TransactionVerificationError",
+    "evaluate",
     "release_gate",
-    "verify_receipt",
 ]
-__version__ = release_gate.__version__

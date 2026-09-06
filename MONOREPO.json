@@ -1,0 +1,191 @@
+{
+  "delete_authorized": false,
+  "schema_version": 1,
+  "status": "LOCAL_PREPARATION",
+  "target": {
+    "kind": "PRODUCT",
+    "repository": "vigilanty0x/shipcheck",
+    "sources": [
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/ci-failure-summarizer",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "4a42a0c933b227eda3c89c7c94ea7b670c272a90",
+          "tree": "0aa0fe67c6b12cb6c4f437cc91321fd7859621e2",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/ci-failure-summarizer"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/ci-matrix-generator",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "f77a371dbc26fe6931476d68d83cd93a2e94d758",
+          "tree": "d8dbcab3f83e42f58c1db0d3b4d2497413cdada3",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/ci-matrix-generator"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/deploy-truth",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "dedc297263b9bdc62ed0d24177401513531c03bf",
+          "tree": "803d2f28910c48e5de0b2741ae99954f46820495",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/deploy-truth"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/diff-risk-scorer",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "8631500bc5cecb9524cd617532362b5ee0ea9851",
+          "tree": "c60cf590c1c777973a1c1825850496e4efe18e04",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/diff-risk-scorer"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/flaky-test-tracker",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "696a33a1bf1fe36be4a63abd169ab2574baba6ad",
+          "tree": "814b6ab33951a96d880835916be24003c606b097",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/flaky-test-tracker"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/local-ci-runner",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "aaf04c7d1342e56eb424e685a957c39a22363d2c",
+          "tree": "c822c983966a65ef1233d595f997b715b4b62218",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/local-ci-runner"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/pr-review-council",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "3d9d3609cdbfedf767188cdd703f819f9fd77c3b",
+          "tree": "bac049f752dd61644ddf7d72dfc5cd4206b5a16b",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/pr-review-council"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/release-readiness",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "c4285c70ca942909ce966ee93ca5805d629f2dae",
+          "tree": "fa33142a04c7530694809e0b7db26beeaced025b",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/release-readiness"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/reproducible-demo-harness",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "8f6c44e3a3a9fb1d084b090a1990b8b105f59267",
+          "tree": "0f392fbb9b286946dfacea420fbbeeac6b2b543b",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/reproducible-demo-harness"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/rollback-drill",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "582f3e851ace799b0ebfc5b7907852bf54802f68",
+          "tree": "ba2216a4a9034044d887dee56c29ac8ff0ee291f",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/rollback-drill"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/safe-merge-gate",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "0b9f8054322a8fde647dd67f2070e9ce3c0ae52c",
+          "tree": "7c57c3b6d5c9492f7569a8c72ff4b1e477ee69ff",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "."
+      },
+      {
+        "disposition": "KEEP",
+        "repository": "vigilanty0x/shipcheck",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "a90a3795a17b15283c731297a6dc340dd98553d9",
+          "tree": "b8144fc3911a0eff11c5085ace3831cac9bd737d",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "."
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/shipcheck-release-gate",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "8d5813d3ec492abefccc704ba16467f894d71863",
+          "tree": "3dcce371575565d698d10fbd549ae3e774ff379c",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "."
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/test-evidence-pack",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "e8125b372c7b7c8ce7968eb127e7dde33e2fa7cd",
+          "tree": "95fd0ec0f8839d261612c2d33d7483c32d5ff194",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/test-evidence-pack"
+      },
+      {
+        "disposition": "ABSORB",
+        "repository": "vigilanty0x/test-gap-finder",
+        "source": {
+          "archived": false,
+          "default_branch": "main",
+          "head": "6452a57bab479edf88ac931deece0fdd456e7fcd",
+          "tree": "867c299461ac676eda3956eb0d0fd787d7e2e283",
+          "visibility": "PUBLIC"
+        },
+        "target_path": "packages/test-gap-finder"
+      }
+    ]
+  }
+}
